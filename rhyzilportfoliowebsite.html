@@ -1,0 +1,1615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Rhyzil Portfolio | Front-End Developer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Rajdhani:wght@400;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <style>
+    /* Reset and basic */
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+    body, html {
+      margin: 0;
+      padding: 0;
+      font-family: 'Rajdhani', sans-serif;
+      background-color: #0a0a14;
+      color: white;
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+    a:hover, a:focus {
+      color: #bbb;
+    }
+    img {
+      max-width: 100%;
+      display: block;
+      border-radius: 12px;
+      border: 3px solid #800080cc;
+      box-shadow: 0 5px 15px #80008099;
+    }
+
+    /* Container */
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 0 1rem;
+    }
+
+    /* Neon colors and text shadows */
+    :root {
+      --neon-blue: #00f7ff;
+      --neon-purple: #e100ff;
+      --neon-green: #00ff66;
+      --dark-bg: #0a0a14;
+      --darker-bg: #05050a;
+    }
+
+    .neon-text {
+      color: var(--neon-blue);
+      text-shadow:
+        0 0 5px rgba(0, 247, 255, 0.7),
+        0 0 10px rgba(0, 247, 255, 0.5),
+        0 0 20px rgba(0, 247, 255, 0.3);
+    }
+
+    .neon-text-purple {
+      color: var(--neon-purple);
+      text-shadow:
+        0 0 5px rgba(225, 0, 255, 0.7),
+        0 0 10px rgba(225, 0, 255, 0.5),
+        0 0 20px rgba(225, 0, 255, 0.3);
+    }
+
+    .neon-text-green {
+      color: var(--neon-green);
+      text-shadow:
+        0 0 5px rgba(0, 255, 102, 0.7),
+        0 0 10px rgba(0, 255, 102, 0.5),
+        0 0 20px rgba(0, 255, 102, 0.3);
+    }
+
+    /* Header */
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(5, 5, 10, 0.85);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(0, 247, 255, 0.2);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+      height: 64px;
+      z-index: 1000;
+    }
+    .header-container {
+      max-width: 1200px;
+      height: 64px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 1rem;
+      font-family: 'Orbitron', sans-serif;
+    }
+    .logo {
+      font-size: 1.75rem;
+      font-weight: 700;
+      user-select: none;
+    }
+    .logo span.white {
+      color: white;
+      font-weight: 400;
+    }
+
+    /* Navigation */
+    nav.desktop-nav {
+      display: flex;
+      gap: 1.5rem;
+    }
+    nav.desktop-nav a {
+      position: relative;
+      padding: 0.5rem 0;
+      font-weight: 600;
+      font-size: 1rem;
+      color: white;
+      cursor: pointer;
+    }
+    nav.desktop-nav a::after {
+      content: "";
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
+      transition: width 0.3s ease;
+      border-radius: 2px;
+    }
+    nav.desktop-nav a:hover::after,
+    nav.desktop-nav a:focus::after {
+      width: 100%;
+    }
+
+    /* Mobile menu button */
+    .mobile-menu-button {
+      background: none;
+      border: none;
+      display: none;
+      color: white;
+      cursor: pointer;
+      padding: 6px;
+    }
+    .mobile-menu-button svg {
+      width: 28px; height: 28px;
+      stroke-width: 2.2;
+    }
+
+    /* Mobile menu */
+    nav.mobile-menu {
+      position: fixed;
+      top: 64px;
+      left: 0;
+      width: 100%;
+      height: calc(100vh - 64px);
+      background: rgba(5,5,10,0.95);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 2rem;
+      gap: 2rem;
+      z-index: 900;
+    }
+    nav.mobile-menu a {
+      color: white;
+      font-size: 1.25rem;
+      font-weight: 700;
+      user-select: none;
+    }
+    nav.mobile-menu.show {
+      display: flex;
+    }
+
+    /* Main sections */
+    section {
+      padding: 6rem 0 4rem 0;
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+
+    /* Home Section */
+    #home {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      min-height: calc(100vh - 64px);
+      justify-content: center;
+    }
+    #home h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(3rem, 8vw, 5rem);
+      margin-bottom: 0.5rem;
+    }
+    #home h2 {
+      font-weight: 400;
+      font-size: clamp(1.25rem, 3vw, 2rem);
+      margin-bottom: 1rem;
+      font-style: italic;
+      color: #ccc;
+    }
+    #tagline-container {
+      max-width: 30rem;
+      font-size: 1.1rem;
+      color: #ccc;
+      user-select: none;
+    }
+    #regenerate-tagline {
+      margin-top: 0.5rem;
+      background: rgba(255 255 255 / 0.15);
+      border: none;
+      border-radius: 9999px;
+      color: white;
+      padding: 0.3rem 1rem;
+      cursor: pointer;
+      font-size: 0.85rem;
+      display: inline-flex;
+      align-items: center;
+      transition: background-color 0.3s ease;
+    }
+    #regenerate-tagline:hover,
+    #regenerate-tagline:focus {
+      background: rgba(255 255 255 / 0.3);
+      outline: none;
+    }
+    #regenerate-tagline i.material-icons {
+      font-size: 1rem;
+      margin-right: 0.25rem;
+      animation: none !important;
+    }
+
+    /* Buttons under hero */
+    .hero-buttons {
+      margin-top: 2rem;
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .btn-primary,
+    .btn-secondary {
+      border-radius: 9999px;
+      padding: 0.75rem 2rem;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 10px rgba(0,247,255,0.25);
+      user-select: none;
+      border: 2px solid transparent;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .btn-primary {
+      background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
+      color: #0a0a14;
+      border-color: transparent;
+    }
+    .btn-primary:hover,
+    .btn-primary:focus {
+      box-shadow: 0 0 20px var(--neon-purple);
+      color: #0a0a14;
+      outline: none;
+      transform: translateY(-2px);
+    }
+    .btn-secondary {
+      background: transparent;
+      color: white;
+      border-color: #4c9aff;
+    }
+    .btn-secondary:hover,
+    .btn-secondary:focus {
+      background-color: rgba(79, 109, 255, 0.15);
+      outline: none;
+      transform: translateY(-2px);
+    }
+    .btn-primary i.material-icons,
+    .btn-secondary i.material-icons {
+      margin-left: 0.4rem;
+      font-size: 1.15rem;
+    }
+
+    /* Social links */
+    .social-links {
+      margin-top: 2rem;
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+    }
+    .social-links a {
+      color: #999;
+      font-size: 1.8rem;
+      transition: color 0.3s ease;
+      user-select: none;
+    }
+    .social-links a:hover,
+    .social-links a:focus {
+      color: var(--neon-blue);
+      outline: none;
+    }
+
+    /* Projects Section */
+    #projects h2 {
+      text-align: center;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2.5rem;
+      margin-bottom: 3rem;
+      color: var(--neon-blue);
+    }
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+      gap: 1.5rem;
+    }
+    .project-card {
+      background: rgba(10, 10, 20, 0.9);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 0 8px rgba(0, 247, 255, 0.3);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border: 1px solid rgba(0, 247, 255, 0.1);
+    }
+    .project-card:hover,
+    .project-card:focus-within {
+      transform: translateY(-6px);
+      box-shadow: 0 0 25px rgba(0, 247, 255, 0.7);
+      border-color: rgba(0, 247, 255, 0.5);
+      outline: none;
+    }
+    .project-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      flex-shrink: 0;
+      border-radius: 18px 18px 0 0;
+    }
+    .project-content {
+      padding: 1rem 1rem 1.5rem 1rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .project-title {
+      font-weight: 700;
+      font-size: 1.25rem;
+      margin-bottom: 0.4rem;
+      color: var(--neon-blue);
+    }
+    .project-title.purple {
+      color: var(--neon-purple);
+    }
+    .project-title.green {
+      color: var(--neon-green);
+    }
+    .project-description {
+      color: #ccc;
+      flex-grow: 1;
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+      line-height: 1.4;
+    }
+    .project-skills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 1rem;
+    }
+    .skill-badge-small {
+      font-size: 0.7rem;
+      padding: 0.25rem 0.5rem;
+      border-radius: 9999px;
+      font-weight: 600;
+      user-select: none;
+      border: 1.5px solid transparent;
+      background: rgba(0,0,0,0.2);
+      color: white;
+      white-space: nowrap;
+    }
+    .skill-blue { background: #1E40AF; border-color: #3B82F6; color: #93C5FD; }
+    .skill-green { background: #064E3B; border-color: #22C55E; color: #BBF7D0; }
+    .skill-purple { background: #4C1D95; border-color: #7C3AED; color: #C4B5FD; }
+    .skill-indigo { background: #312E81; border-color: #6366F1; color: #A5B4FC; }
+    .skill-red { background: #7F1D1D; border-color: #EF4444; color: #FCA5A5; }
+    .skill-yellow { background: #78350F; border-color: #F59E0B; color: #FEF3C7; }
+    .skill-teal { background: #164E63; border-color: #5EEAD4; color: #CCFBF1; }
+    .project-links {
+      margin-top: auto;
+      display: flex;
+      gap: 1rem;
+      font-size: 0.85rem;
+    }
+    .project-links a {
+      color: var(--neon-blue);
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      user-select: none;
+    }
+    .project-links a:hover,
+    .project-links a:focus {
+      color: var(--neon-purple);
+      outline: none;
+    }
+    .material-icons.md-18 { font-size: 18px; }
+    .material-icons.md-20 { font-size: 20px; }
+    /* Skill bars */
+    .skill-badge {
+      background: rgba(10,10,20,0.6);
+      border: 1px solid rgba(0,247,255,0.2);
+      border-radius: 12px;
+      padding: 0.75rem 1rem;
+      text-align: center;
+      position: relative;
+      transition: box-shadow 0.3s ease, border-color 0.3s ease;
+      cursor: default;
+      user-select: none;
+    }
+    .skill-badge:hover,
+    .skill-badge:focus {
+      box-shadow: 0 0 10px rgba(0, 247, 255, 0.3);
+      border-color: rgba(0, 247, 255, 0.5);
+      outline: none;
+      transform: translateY(-3px);
+    }
+    .skill-badge i.material-icons {
+      display: block;
+      margin-bottom: 0.4rem;
+      font-size: 1.6rem;
+      color: inherit;
+    }
+    .skill-bar-bg {
+      height: 6px;
+      background: #222;
+      border-radius: 6px;
+      overflow: hidden;
+      margin-top: 0.3rem;
+    }
+    .skill-bar-fill {
+      height: 6px;
+      background: var(--neon-blue);
+      width: var(--fill-width);
+      border-radius: 6px;
+      transition: width 0.5s ease;
+    }
+
+    /* About Section */
+    #about h2 {
+      text-align: center;
+      margin-bottom: 2rem;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2.5rem;
+      color: var(--neon-blue);
+    }
+    .about-card {
+      background: rgba(10, 10, 20, 0.7);
+      border: 1px solid rgba(225, 0, 255, 0.3);
+      padding: 2rem;
+      border-radius: 18px;
+      max-width: 850px;
+      margin-left: auto;
+      margin-right: auto;
+      box-shadow: 0 0 12px rgba(225, 0, 255, 0.3);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      align-items: center;
+    }
+    .about-image {
+      flex-basis: 30%;
+      min-width: 180px;
+    }
+    .about-image img {
+      border-radius: 15px;
+      border-color: var(--neon-purple);
+      box-shadow: 0 0 20px var(--neon-purple);
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+    .about-text {
+      flex-basis: 65%;
+      color: #ccc;
+      font-size: 1rem;
+      line-height: 1.5;
+      user-select: text;
+    }
+    .about-text h3 {
+      color: var(--neon-purple);
+      font-weight: 700;
+      margin-bottom: 1rem;
+      font-size: 1.5rem;
+    }
+    .about-buttons a {
+      display: inline-block;
+      background: rgba(128, 0, 128, 0.5);
+      padding: 0.6rem 1.5rem;
+      border-radius: 9999px;
+      margin-right: 1rem;
+      color: white;
+      font-weight: 600;
+      font-size: 1rem;
+      border: 1.5px solid transparent;
+      transition: background-color 0.3s ease, border-color 0.3s ease;
+      user-select: none;
+      cursor: pointer;
+    }
+    .about-buttons a:hover,
+    .about-buttons a:focus {
+      background: rgba(128, 0, 128, 0.8);
+      border-color: var(--neon-purple);
+      outline: none;
+    }
+
+    /* Experience Section */
+    #experience {
+      background-color: rgba(0, 255, 102, 0.05);
+      border-radius: 18px;
+      padding-bottom: 4rem;
+    }
+    #experience h2 {
+      font-family: 'Orbitron', sans-serif;
+      text-align: center;
+      font-size: 2.5rem;
+      margin-bottom: 3rem;
+      color: var(--neon-green);
+    }
+    .experience-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      max-width: 850px;
+      margin: 0 auto;
+      gap: 2rem;
+    }
+    @media (min-width: 700px) {
+      .experience-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    .experience-section h3 {
+      font-weight: 800;
+      font-size: 1.7rem;
+      margin-bottom: 1rem;
+      color: var(--neon-green);
+    }
+    .experience-card {
+      border-left: 3px solid var(--neon-green);
+      background: rgba(10, 10, 20, 0.6);
+      padding: 1rem 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0, 255, 102, 0.15);
+      position: relative;
+      transition: box-shadow 0.3s ease;
+    }
+    .experience-card:hover,
+    .experience-card:focus-within {
+      box-shadow: 0 0 25px rgba(0, 255, 102, 0.3);
+      outline: none;
+    }
+    .experience-card::before {
+      content: "";
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--neon-green);
+      left: -9px;
+      top: 24px;
+    }
+    .experience-card h4 {
+      font-weight: 700;
+      font-size: 1.2rem;
+      margin: 0;
+      margin-bottom: 0.1rem;
+    }
+    .experience-card p.company {
+      color: #00ff66;
+      margin: 0;
+      margin-bottom: 0.2rem;
+      font-weight: 600;
+    }
+    .experience-card p.dates {
+      font-size: 0.85rem;
+      color: #9f9f9f;
+      margin-bottom: 0.5rem;
+    }
+    .experience-card p.description {
+      color: #ccc;
+      line-height: 1.4;
+      margin: 0;
+      user-select: text;
+    }
+
+    /* Achievements Section */
+    #achievements h2 {
+      font-family: 'Orbitron', sans-serif;
+      text-align: center;
+      font-size: 2.5rem;
+      color: var(--neon-blue);
+      margin-bottom: 2rem;
+    }
+    .achievement-card {
+      max-width: 650px;
+      background: rgba(10, 10, 20, 0.25);
+      border-radius: 18px;
+      border: 1px solid rgba(0, 247, 255, 0.2);
+      margin: 0 auto 3rem auto;
+      padding: 1.5rem 2rem;
+      box-shadow: 0 0 12px rgba(0, 247, 255, 0.2);
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      transition: transform 0.3s ease;
+      cursor: default;
+      user-select: text;
+    }
+    .achievement-card:hover,
+    .achievement-card:focus-within {
+      transform: translateY(-6px);
+      box-shadow: 0 0 25px rgba(0, 247, 255, 0.4);
+      outline: none;
+    }
+    .achievement-icon {
+      font-size: 2rem;
+      color: gold;
+      animation: trophy-pulse 2s infinite ease-in-out;
+      min-width: 48px;
+    }
+    @keyframes trophy-pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.15); opacity: 0.9; }
+    }
+    .achievement-content h4 {
+      margin: 0;
+      font-weight: 600;
+      color: #22c55e;
+    }
+    .achievement-content p {
+      margin-top: 0.5rem;
+      line-height: 1.4;
+      color: #ccc;
+    }
+
+    /* What I Offer Section */
+    #offer h2 {
+      font-family: 'Orbitron', sans-serif;
+      text-align: center;
+      font-size: 2.5rem;
+      margin-bottom: 3rem;
+      color: var(--neon-blue);
+    }
+    .offer-grid {
+      display: grid;
+      gap: 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+      grid-template-columns: 1fr;
+    }
+    @media (min-width: 650px) {
+      .offer-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+    .offer-card {
+      background: rgba(10, 10, 20, 0.2);
+      border-radius: 18px;
+      padding: 2rem 1.5rem;
+      border: 1px solid rgba(0, 247, 255, 0.15);
+      box-shadow: 0 0 12px rgba(0, 247, 255, 0.2);
+      text-align: center;
+      transition: box-shadow 0.3s ease, transform 0.3s ease, background-color 0.3s ease;
+      cursor: default;
+      user-select: text;
+    }
+    .offer-card:hover,
+    .offer-card:focus-within {
+      box-shadow: 0 0 25px rgba(0, 247, 255, 0.35);
+      background-color: rgba(0, 247, 255, 0.05);
+      outline: none;
+      transform: translateY(-6px);
+    }
+    .offer-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: var(--neon-blue);
+    }
+    .offer-icon.green {
+      color: var(--neon-green);
+    }
+    .offer-icon.purple {
+      color: var(--neon-purple);
+    }
+    .offer-icon.red {
+      color: #ff4444;
+    }
+    .offer-icon.yellow {
+      color: #faeb46;
+    }
+    .offer-title {
+      font-weight: 700;
+      font-size: 1.25rem;
+      margin-bottom: 0.75rem;
+      color: white;
+      letter-spacing: 0.02em;
+    }
+    .offer-description {
+      font-size: 0.9rem;
+      color: #ccc;
+      line-height: 1.4;
+    }
+
+    /* Contact Section */
+    #contact h2 {
+      font-family: 'Orbitron', sans-serif;
+      text-align: center;
+      font-size: 2.5rem;
+      color: var(--neon-blue);
+      margin-bottom: 3rem;
+    }
+    #contact form {
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+      background: rgba(10, 10, 20, 0.7);
+      border-radius: 18px;
+      padding: 2rem;
+      box-shadow: 0 0 15px rgba(0, 247, 255, 0.3);
+    }
+    #contact label {
+      display: block;
+      font-weight: 600;
+      color: #ccc;
+      margin-bottom: 0.4rem;
+      font-size: 0.9rem;
+    }
+    #contact input[type="text"],
+    #contact input[type="email"],
+    #contact textarea {
+      width: 100%;
+      padding: 0.7rem 0.8rem;
+      background: rgba(10, 10, 20, 0.75);
+      border: 2px solid rgba(0, 247, 255, 0.2);
+      border-radius: 14px;
+      color: white;
+      font-size: 1rem;
+      font-family: inherit;
+      resize: vertical;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      outline-offset: 2px;
+      user-select: text;
+    }
+    #contact input[type="text"]:focus,
+    #contact input[type="email"]:focus,
+    #contact textarea:focus {
+      border-color: var(--neon-blue);
+      box-shadow: 0 0 8px var(--neon-blue);
+      outline: none;
+    }
+    #contact input.error,
+    #contact textarea.error {
+      border-color: #ff3c78;
+      box-shadow: 0 0 8px #ff3c78;
+    }
+    #contact button[type="submit"] {
+      margin-top: 1rem;
+      width: 100%;
+      padding: 0.75rem;
+      background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
+      color: #0a0a14;
+      font-weight: 700;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 14px;
+      cursor: pointer;
+      transition: box-shadow 0.3s ease, transform 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      user-select: none;
+    }
+    #contact button[type="submit"]:hover,
+    #contact button[type="submit"]:focus {
+      box-shadow: 0 0 18px var(--neon-purple);
+      transform: translateY(-2px);
+      outline: none;
+    }
+    #contact button[type="submit"] i.material-icons {
+      margin-left: 0.6rem;
+      font-size: 1.3rem;
+    }
+    #form-status {
+      margin-top: 1rem;
+      text-align: center;
+      font-size: 0.95rem;
+      display: none;
+      user-select: none;
+    }
+
+    /* Footer */
+    footer {
+      background-color: #121212;
+      color: #888;
+      padding: 1.5rem 1rem;
+      text-align: center;
+      font-size: 0.9rem;
+      user-select: none;
+    }
+    footer .footer-logo {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 700;
+      color: var(--neon-blue);
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+      user-select: text;
+    }
+    footer nav {
+      margin: 1rem 0;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      user-select: none;
+    }
+    footer nav a {
+      color: #666;
+      transition: color 0.3s ease;
+    }
+    footer nav a:hover,
+    footer nav a:focus {
+      color: var(--neon-blue);
+      outline: none;
+    }
+    footer hr {
+      margin: 1rem auto;
+      border: none;
+      height: 1px;
+      background-color: #333;
+      max-width: 800px;
+    }
+    footer .bottom-info {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-top: 1rem;
+      color: #555;
+      user-select: none;
+    }
+    footer .bottom-info a {
+      color: #555;
+      font-size: 1.5rem;
+      transition: color 0.3s ease;
+    }
+    footer .bottom-info a:hover,
+    footer .bottom-info a:focus {
+      color: var(--neon-blue);
+      outline: none;
+    }
+
+    /* Responsive grid for skills */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(140px,1fr));
+      gap: 1rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    /* Loading dots animation */
+    .loading-dots span {
+      display: inline-block;
+      animation: loadingDots 1.4s infinite;
+      opacity: 0;
+    }
+    .loading-dots span:nth-child(1) {
+      animation-delay: 0s;
+    }
+    .loading-dots span:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+    .loading-dots span:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+    @keyframes loadingDots {
+      0%, 100% { opacity: 0; }
+      50% { opacity: 1; }
+    }
+
+    /* Utility */
+    .hidden { display: none !important; }
+    .visually-hidden {
+      position: absolute !important;
+      width: 1px !important;
+      height: 1px !important;
+      margin: -1px !important;
+      padding: 0 !important;
+      overflow: hidden !important;
+      clip: rect(0 0 0 0) !important;
+      border: 0 !important;
+    }
+
+    /* Media Queries */
+    @media (max-width: 768px) {
+      nav.desktop-nav {
+        display: none;
+      }
+      .mobile-menu-button {
+        display: block;
+      }
+      .about-card {
+        flex-direction: column;
+        text-align: center;
+      }
+      .about-image,
+      .about-text {
+        flex-basis: 100%;
+      }
+      .about-text {
+        padding-top: 1.5rem;
+      }
+    }
+
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-container">
+      <a href="#home" class="logo neon-text">RHYZIL<span class="white">DEV</span></a>
+
+      <nav class="desktop-nav" aria-label="Primary navigation">
+        <a href="#home" tabindex="0">Home</a>
+        <a href="#projects" tabindex="0">Projects</a>
+        <a href="#about" tabindex="0">About</a>
+        <a href="#skills" tabindex="0">Skills</a>
+        <a href="#experience" tabindex="0">Experience</a>
+        <a href="#contact" tabindex="0">Contact</a>
+      </nav>
+
+      <button class="mobile-menu-button" aria-controls="mobile-menu" aria-expanded="false" aria-label="Toggle menu">
+        <span class="material-icons">menu</span>
+      </button>
+    </div>
+
+    <nav id="mobile-menu" class="mobile-menu" aria-label="Mobile navigation">
+      <a href="#home" tabindex="0">Home</a>
+      <a href="#projects" tabindex="0">Projects</a>
+      <a href="#about" tabindex="0">About</a>
+      <a href="#skills" tabindex="0">Skills</a>
+      <a href="#experience" tabindex="0">Experience</a>
+      <a href="#contact" tabindex="0">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+
+    <section id="home">
+      <h1 class="logo neon-text" aria-live="polite" aria-atomic="true"><span id="name-animation">&nbsp;</span></h1>
+      <h2 aria-live="polite" aria-atomic="true"><span id="role-animation">Loading...</span></h2>
+
+      <div id="tagline-container" role="region" aria-label="Tagline">
+        <p id="tagline-text" tabindex="0" style="color:#999;">Creating digital experiences that fuse innovation with elegance</p>
+        <button id="regenerate-tagline" aria-live="polite" aria-atomic="true" aria-label="Regenerate tagline">
+          <span class="material-icons" aria-hidden="true" id="regenerate-icon">sync</span> Regenerate
+        </button>
+      </div>
+
+      <div class="hero-buttons" role="region">
+        <a href="#projects" class="btn-primary" role="button">View Projects</a>
+        <a href="#contact" class="btn-secondary" role="button">Contact Me</a>
+      </div>
+
+      <div class="social-links" aria-label="Social links">
+        <a href="https://github.com/Rhyzildevs" target="_blank" rel="noopener" aria-label="GitHub"><span class="material-icons" style="font-size:28px;">code</span></a>
+        <a href="https://www.facebook.com/rhyzil.angelo.pabadora.jimenez" target="_blank" rel="noopener" aria-label="Facebook"><span class="material-icons" style="font-size:28px;">facebook</span></a>
+        <a href="https://www.linkedin.com/in/rhyzil-dev-10993535a/" target="_blank" rel="noopener" aria-label="LinkedIn"><span class="material-icons" style="font-size:28px;">linkedin</span></a>
+        <a href="mailto:rhyzilangelopabadorajimenez@gmail.com" aria-label="Email"><span class="material-icons" style="font-size:28px;">email</span></a>
+      </div>
+    </section>
+
+    <section id="projects" aria-label="Featured Projects">
+      <h2>Featured Projects</h2>
+      <div class="projects-grid">
+
+        <article class="project-card" tabindex="0" aria-labelledby="project1-title">
+          <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/6bc5ef35-14a1-46b6-85c9-52d55d48059d.png" alt="AI Analytics Dashboard project preview" />
+          <div class="project-content">
+            <h3 id="project1-title" class="project-title">AI Analytics Dashboard</h3>
+            <p class="project-description">A modern dashboard for visualizing AI model performance with real-time metrics and interactive charts.</p>
+            <div class="project-skills">
+              <span class="skill-badge-small skill-blue">React</span>
+              <span class="skill-badge-small skill-green">D3.js</span>
+              <span class="skill-badge-small skill-purple">TensorFlow.js</span>
+            </div>
+            <div class="project-links">
+              <a href="#" aria-label="Live Demo of AI Analytics Dashboard">Live Demo <span class="material-icons md-18">launch</span></a>
+              <a href="#" aria-label="Source Code of AI Analytics Dashboard">Source Code <span class="material-icons md-18">code</span></a>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card" tabindex="0" aria-labelledby="project2-title">
+          <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/8ac41d80-66b5-4225-91b4-9d7102b3b51e.png" alt="NextGen E-Commerce project preview" />
+          <div class="project-content">
+            <h3 id="project2-title" class="project-title purple">NextGen E-Commerce</h3>
+            <p class="project-description">A next-generation shopping platform with AR product previews and personalized recommendations.</p>
+            <div class="project-skills">
+              <span class="skill-badge-small skill-indigo">Next.js</span>
+              <span class="skill-badge-small skill-red">GraphQL</span>
+              <span class="skill-badge-small skill-yellow">Three.js</span>
+            </div>
+            <div class="project-links">
+              <a href="#" aria-label="Live Demo of NextGen E-Commerce">Live Demo <span class="material-icons md-18">launch</span></a>
+              <a href="#" aria-label="Source Code of NextGen E-Commerce">Source Code <span class="material-icons md-18">code</span></a>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card" tabindex="0" aria-labelledby="project3-title">
+          <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/651a985f-bcb6-4ed2-a76c-73b5140ebe96.png" alt="DevConnect Social project preview" />
+          <div class="project-content">
+            <h3 id="project3-title" class="project-title green">DevConnect Social</h3>
+            <p class="project-description">A developer-focused social platform featuring code sharing, mentorship matching, and tech event discovery.</p>
+            <div class="project-skills">
+              <span class="skill-badge-small skill-teal">Vue.js</span>
+              <span class="skill-badge-small skill-blue">Firebase</span>
+              <span class="skill-badge-small skill-indigo">Socket.io</span>
+            </div>
+            <div class="project-links">
+              <a href="#" aria-label="Live Demo of DevConnect Social">Live Demo <span class="material-icons md-18">launch</span></a>
+              <a href="#" aria-label="Source Code of DevConnect Social">Source Code <span class="material-icons md-18">code</span></a>
+            </div>
+          </div>
+        </article>
+
+      </div>
+      <div style="text-align:center; margin-top:2rem;">
+        <a href="#" class="btn-secondary" role="button" aria-label="View all projects">View All Projects <span class="material-icons md-18">arrow_forward</span></a>
+      </div>
+    </section>
+
+    <section id="about" aria-label="About Me">
+      <h2>About Me</h2>
+      <div class="about-card">
+        <div class="about-image">
+          <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/b8d2f2dd-556f-46e3-88a2-1ce3f4a7916f.png" alt="Portrait photo of Rhyzil, front-end developer" />
+        </div>
+        <div class="about-text">
+          <h3>Hello, I'm <span id="about-name">Rhyzil</span></h3>
+          <p>
+            A front-end dev who loves turning ideas into slick, interactive websites. I’m all about clean code,
+            smooth UI, and making digital experiences that actually vibe with users. Always leveling up with the latest
+            tech and design trends, I’m here to build the future one line of code at a time.
+          </p>
+
+          <div class="about-buttons" style="margin-top: 1.5rem;">
+            <a href="#" aria-label="Download Resume"><span class="material-icons" aria-hidden="true">article</span> Download Resume</a>
+            <a href="#contact" aria-label="Get in Touch"><span class="material-icons" aria-hidden="true">email</span> Get in Touch</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills" aria-label="Technical Skills">
+      <h2>Technical Skills</h2>
+      <div class="skills-grid" role="list">
+
+        <div class="skill-badge" role="listitem" tabindex="0">
+          <i class="material-icons" aria-hidden="true" style="color:#F16529;">code</i>
+          <div>HTML5</div>
+          <div class="skill-bar-bg" aria-hidden="true">
+            <div class="skill-bar-fill" style="--fill-width:95%; width: 95%;"></div>
+          </div>
+        </div>
+
+        <div class="skill-badge" role="listitem" tabindex="0">
+          <i class="material-icons" aria-hidden="true" style="color:#264DE4;">code</i>
+          <div>CSS3</div>
+          <div class="skill-bar-bg" aria-hidden="true">
+            <div class="skill-bar-fill" style="--fill-width:90%; width: 90%;"></div>
+          </div>
+        </div>
+
+        <div class="skill-badge" role="listitem" tabindex="0">
+          <i class="material-icons" aria-hidden="true" style="color:#F0DB4F;">code</i>
+          <div>JavaScript</div>
+          <div class="skill-bar-bg" aria-hidden="true">
+            <div class="skill-bar-fill" style="--fill-width:92%; width: 92%;"></div>
+          </div>
+        </div>
+
+        <div class="skill-badge" role="listitem" tabindex="0">
+          <i class="material-icons" aria-hidden="true" style="color:#61DBFB;">code</i>
+          <div>React</div>
+          <div class="skill-bar-bg" aria-hidden="true">
+            <div class="skill-bar-fill" style="--fill-width:88%; width: 88%;"></div>
+          </div>
+        </div>
+
+        <div class="skill-badge" role="listitem" tabindex="0">
+          <i class="material-icons" aria-hidden="true" style="color:#42B883;">code</i>
+          <div>Vue.js</div>
+          <div class="skill-bar-bg" aria-hidden="true">
+            <div class="skill-bar-fill" style="--fill-width:82%; width:82%;"></div>
+          </div>
+        </div>
+
+        <div class="skill-badge" role="listitem" tabindex="0">
+          <i class="material-icons" aria-hidden="true" style="color:#68A063;">code</i>
+          <div>Node.js</div>
+          <div class="skill-bar-bg" aria-hidden="true">
+            <div class="skill-bar-fill" style="--fill-width:75%; width: 75%;"></div>
+          </div>
+        </div>
+
+        <div class="skill-badge" role="listitem" tabindex="0">
+          <i class="material-icons" aria-hidden="true" style="color:#CD6799;">code</i>
+          <div>Sass</div>
+          <div class="skill-bar-bg" aria-hidden="true">
+            <div class="skill-bar-fill" style="--fill-width:85%; width: 85%;"></div>
+          </div>
+        </div>
+
+        <div class="skill-badge" role="listitem" tabindex="0">
+          <i class="material-icons" aria-hidden="true" style="color:#F34F29;">code</i>
+          <div>Git</div>
+          <div class="skill-bar-bg" aria-hidden="true">
+            <div class="skill-bar-fill" style="--fill-width:80%; width: 80%;"></div>
+          </div>
+        </div>
+
+        <div class="skill-badge" role="listitem" tabindex="0">
+          <i class="material-icons" aria-hidden="true" style="color:#8B5CF6;">devices</i>
+          <div>Responsive Design</div>
+          <div class="skill-bar-bg" aria-hidden="true">
+            <div class="skill-bar-fill" style="--fill-width:95%; width: 95%;"></div>
+          </div>
+        </div>
+
+        <div class="skill-badge" role="listitem" tabindex="0">
+          <i class="material-icons" aria-hidden="true">storage</i>
+          <div>GraphQL</div>
+          <div class="skill-bar-bg" aria-hidden="true">
+            <div class="skill-bar-fill" style="--fill-width:70%; width: 70%;"></div>
+          </div>
+        </div>
+
+        <div class="skill-badge" role="listitem" tabindex="0">
+          <i class="material-icons" aria-hidden="true">layers</i>
+          <div>Tailwind CSS</div>
+          <div class="skill-bar-bg" aria-hidden="true">
+            <div class="skill-bar-fill" style="--fill-width:90%; width: 90%;"></div>
+          </div>
+        </div>
+
+        <div class="skill-badge" role="listitem" tabindex="0">
+          <i class="material-icons" aria-hidden="true">view_in_ar</i>
+          <div>Three.js</div>
+          <div class="skill-bar-bg" aria-hidden="true">
+            <div class="skill-bar-fill" style="--fill-width:65%; width: 65%;"></div>
+          </div>
+        </div>
+
+      </div>
+
+      <div style="text-align:center; margin-top:1.5rem;">
+        <button id="generate-skills" aria-live="polite" aria-atomic="true" style="background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple)); border:none; border-radius: 22px; padding: 0.75rem 1.5rem; color:#0a0a14; font-weight: 700; font-size: 1.1rem; cursor:pointer; user-select:none;">
+          <span class="material-icons">auto_fix_high</span> Generate Skills Assessment
+        </button>
+        <div id="skills-loading" class="hidden" style="color:#999; margin-top:0.5rem; font-size:0.9rem;">
+          <span>Analyzing skills profile</span><span class="loading-dots">...</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="experience" aria-label="Experience and Education" style="background: rgba(0, 255, 102, 0.1); border-radius: 18px; padding: 3rem 1rem 4rem 1rem;">
+      <h2>Experience & Education</h2>
+      <div class="experience-grid">
+
+        <div class="experience-section" tabindex="0">
+          <h3>Work Experience</h3>
+
+          <div class="experience-card">
+            <h4>UI/UX Developer</h4>
+            <p class="company">Rhyzildev</p>
+            <p class="dates">2019 - 2022</p>
+            <p class="description">Designed and developed responsive user interfaces for various clients. Collaborated with UX researchers to implement user-centric design solutions.</p>
+          </div>
+
+          <div class="experience-card">
+            <h4>Front-End Developer</h4>
+            <p class="company">Rhyzildev</p>
+            <p class="dates">2017 - 2019</p>
+            <p class="description">Built web applications using modern JavaScript frameworks. Optimized website performance and implemented responsive designs.</p>
+          </div>
+        </div>
+
+        <div class="experience-section" tabindex="0">
+          <h3>Education & Certifications</h3>
+
+          <div class="experience-card">
+            <h4>Bachelor Of Science In Information Technology</h4>
+            <p class="company">PIT-TC TABABANGO</p>
+            <p class="dates">2015 - 2017</p>
+            <p class="description">Specializing in web programming and Web Technologies.</p>
+          </div>
+
+          <div class="experience-card">
+            <h4>Marcelino R. Veloso NHS</h4>
+            <p class="company">Strand Shielded Metal Arc Welding (SMAW)</p>
+            <p class="dates">2023 - 2024</p>
+            <p class="description">Specialized training in Shielded Metal Arc Welding (SMAW) techniques and safety practices.</p>
+          </div>
+
+          <div class="experience-card">
+            <h4>Certifications</h4>
+            <p class="description" style="white-space: pre-line;">
+• AWS Certified Developer - Associate
+• Google Professional Web Developer
+• Meta Front-End Developer Professional Certificate
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="achievements" aria-label="Achievements" style="padding: 4rem 1rem">
+      <h2>Achievements</h2>
+      <div class="achievement-card" tabindex="0">
+        <div class="achievement-icon" aria-hidden="true">&#x1F3C6;</div>
+        <div class="achievement-content">
+          <h4>Certificate of Participation – Intent Code Masters 2025</h4>
+          <p>
+            Kicked off with an inspiring keynote from Ms. Mary Florebelle, this event leveled up IT students with next-gen coding battles.<br/>
+            Participants dove deep into Java and C challenges, testing their logic, speed, and real-time debugging under pressure.<br/>
+            This event wasn’t just about code — it was about community, creativity, and carving out a future in tech that’s bold, fast, and future-ready.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="offer" aria-label="What I Offer" style="padding-bottom: 4rem;">
+      <h2>What I Offer</h2>
+      <div class="offer-grid" role="list">
+
+        <div class="offer-card" tabindex="0" role="listitem">
+          <div class="offer-icon" aria-hidden="true"><span class="material-icons">laptop_mac</span></div>
+          <div class="offer-title">Responsive Web Design</div>
+          <p class="offer-description">Creating beautiful, fully responsive websites that provide an optimal viewing experience across all devices.</p>
+        </div>
+
+        <div class="offer-card" tabindex="0" role="listitem" style="background-color: rgba(128, 0, 128, 0.25); border-color: rgba(225, 0, 255, 0.3); box-shadow: 0 0 12px rgba(225, 0, 255, 0.3);">
+          <div class="offer-icon" aria-hidden="true" style="color: var(--neon-purple)"><span class="material-icons">speed</span></div>
+          <div class="offer-title">Performance Optimization</div>
+          <p class="offer-description">Enhancing load times and user experience through advanced performance tuning techniques.</p>
+        </div>
+
+        <div class="offer-card" tabindex="0" role="listitem" style="background-color: rgba(0, 255, 102, 0.1); border-color: rgba(0, 255, 102, 0.3); box-shadow: 0 0 12px rgba(0, 255, 102, 0.3);">
+          <div class="offer-icon" aria-hidden="true" style="color: var(--neon-green)"><span class="material-icons">universal_access</span></div>
+          <div class="offer-title">Accessibility Focus</div>
+          <p class="offer-description">Building inclusive interfaces that are usable by everyone, regardless of abilities or disabilities.</p>
+        </div>
+
+        <div class="offer-card" tabindex="0" role="listitem" style="background-color: rgba(255, 0, 0, 0.1); border-color: rgba(255, 0, 0, 0.3); box-shadow: 0 0 12px rgba(255, 0, 0, 0.3);">
+          <div class="offer-icon" aria-hidden="true" style="color: #ff4444"><span class="material-icons">code</span></div>
+          <div class="offer-title">Modern JavaScript</div>
+          <p class="offer-description">Leveraging the latest JavaScript frameworks and libraries to create dynamic, interactive web applications.</p>
+        </div>
+
+        <div class="offer-card" tabindex="0" role="listitem" style="background-color: rgba(250, 235, 70, 0.1); border-color: rgba(250, 235, 70, 0.4); box-shadow: 0 0 12px rgba(250, 235, 70, 0.3);">
+          <div class="offer-icon" aria-hidden="true" style="color: #faeb46"><span class="material-icons">lightbulb</span></div>
+          <div class="offer-title">Creative Solutions</div>
+          <p class="offer-description">Finding innovative approaches to complex problems through creative thinking and technical expertise.</p>
+        </div>
+
+        <div class="offer-card" tabindex="0" role="listitem" style="background-color: rgba(75, 0, 130, 0.1); border-color: rgba(75, 0, 130, 0.4); box-shadow: 0 0 12px rgba(75, 0, 130, 0.3);">
+          <div class="offer-icon" aria-hidden="true" style="color: #6500ac"><span class="material-icons">vrpano</span></div>
+          <div class="offer-title">Emerging Technologies</div>
+          <p class="offer-description">Implementing cutting-edge tech like WebGL, AR/VR, and AI-powered interfaces for immersive experiences.</p>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="contact" aria-label="Contact Me">
+      <h2>Get In Touch</h2>
+      <form id="contact-form" novalidate>
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" required aria-required="true" aria-describedby="error-name" />
+        <span id="error-name" class="visually-hidden" role="alert"></span>
+
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required aria-required="true" aria-describedby="error-email" />
+        <span id="error-email" class="visually-hidden" role="alert"></span>
+
+        <label for="subject">Subject</label>
+        <input type="text" id="subject" name="subject" required aria-required="true" aria-describedby="error-subject" />
+        <span id="error-subject" class="visually-hidden" role="alert"></span>
+
+        <label for="message">Message</label>
+        <textarea id="message" name="message" rows="4" required aria-required="true" aria-describedby="error-message"></textarea>
+        <span id="error-message" class="visually-hidden" role="alert"></span>
+
+        <button type="submit" id="submit-button">
+          Send Message <span class="material-icons" aria-hidden="true">send</span>
+        </button>
+        <div id="form-status" role="alert" aria-live="polite"></div>
+      </form>
+
+      <aside style="max-width:500px; margin: 2rem auto 0 auto; color:#ccc;">
+        <h3>Contact Information</h3>
+        <p><span class="material-icons" aria-hidden="true" style="vertical-align: middle;">email</span> rhyzilangelopabadorajimenez@gmail.com</p>
+        <p><span class="material-icons" aria-hidden="true" style="vertical-align: middle;">location_on</span> Tabango, Leyte</p>
+        <p><span class="material-icons" aria-hidden="true" style="vertical-align: middle;">phone</span> 0963 730 4588</p>
+
+        <h4>Connect with me</h4>
+        <div style="display:flex; gap:1rem; font-size:1.8rem; justify-content:center;">
+          <a href="https://github.com/Rhyzildevs" aria-label="GitHub profile" target="_blank" rel="noopener"> <span class="material-icons">code</span> </a>
+          <a href="https://www.facebook.com/rhyzil.angelo.pabadora.jimenez" aria-label="Facebook profile" target="_blank" rel="noopener"> <span class="material-icons">facebook</span> </a>
+          <a href="https://www.linkedin.com/in/rhyzil-dev-10993535a/" aria-label="LinkedIn profile" target="_blank" rel="noopener"> <span class="material-icons">linkedin</span> </a>
+        </div>
+
+        <div style="margin-top:1.5rem; background: rgba(128, 0, 128, 0.3); padding: 1rem; border-radius: 12px; color: #ddaaff; font-size: 0.9rem;">
+          <span class="material-icons" aria-hidden="true" style="vertical-align:middle;">info</span>
+          I typically reply within 24 hours. For urgent concerns, please call or message me directly.
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <footer>
+    <a href="#" class="footer-logo neon-text">RHYZIL<span class="white">DEV</span></a>
+    <nav aria-label="Footer navigation">
+      <a href="#home">Home</a><a href="#projects">Projects</a><a href="#about">About</a><a href="#skills">Skills</a><a href="#experience">Experience</a><a href="#contact">Contact</a>
+    </nav>
+    <hr />
+    <div class="bottom-info" aria-label="Social media links">
+      <p>&copy; 2025 Rhyzil. All rights reserved.</p>
+      <a href="#" aria-label="GitHub">
+        <span class="material-icons">code</span>
+      </a>
+      <a href="#" aria-label="LinkedIn">
+        <span class="material-icons">linkedin</span>
+      </a>
+      <a href="#" aria-label="Twitter">
+        <span class="material-icons">twitter</span>
+      </a>
+      <a href="#" aria-label="Email">
+        <span class="material-icons">email</span>
+      </a>
+    </div>
+  </footer>
+
+<script>
+  // Mobile menu toggle
+  const mobileMenuButton = document.querySelector('.mobile-menu-button');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  mobileMenuButton.addEventListener('click', () => {
+    const expanded = mobileMenuButton.getAttribute('aria-expanded') === 'true';
+    mobileMenuButton.setAttribute('aria-expanded', !expanded);
+    mobileMenu.classList.toggle('show');
+  });
+
+  // Close mobile menu when clicking a link
+  mobileMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      mobileMenu.classList.remove('show');
+      mobileMenuButton.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  // Simple typing effect for #name-animation (simulate typed.js)
+  function typeText(element, texts, typeSpeed = 80, backSpeed = 30, backDelay = 1500) {
+    let textIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    let currentText = '';
+    let cursorVisible = true;
+    const cursorChar = '|';
+
+    function type() {
+      let fullText = texts[textIndex];
+      if (isDeleting) {
+        charIndex--;
+        currentText = fullText.substring(0, charIndex);
+      } else {
+        charIndex++;
+        currentText = fullText.substring(0, charIndex);
+      }
+      element.textContent = currentText;
+
+      let delay = isDeleting ? backSpeed : typeSpeed;
+
+      if (!isDeleting && currentText === fullText) {
+        delay = backDelay;
+        isDeleting = true;
+      } else if (isDeleting && currentText === '') {
+        isDeleting = false;
+        textIndex = (textIndex + 1) % texts.length;
+        delay = 500;
+      }
+      setTimeout(type, delay);
+    }
+    type();
+  }
+
+  // Initiate typing animations
+  document.addEventListener('DOMContentLoaded', () => {
+    // Type "Rhyzil" name once, then loop roles
+    const nameElement = document.getElementById('name-animation');
+    nameElement.textContent = '';
+    const roleElement = document.getElementById('role-animation');
+    roleElement.textContent = '';
+
+    let roles = ['Front-End Developer', 'UI/UX Designer', 'Web Architect'];
+
+    // First type name, then roles
+    let charIndex = 0;
+    let nameText = 'Rhyzil';
+
+    function typeName() {
+      if (charIndex <= nameText.length) {
+        nameElement.textContent = nameText.substring(0, charIndex);
+        charIndex++;
+        setTimeout(typeName, 80);
+      } else {
+        typeRoles();
+      }
+    }
+
+    let roleIndex = 0;
+    let roleCharIndex = 0;
+    let deleting = false;
+
+    function typeRoles() {
+      let currentRole = roles[roleIndex];
+      if (!deleting) {
+        roleElement.textContent = currentRole.substring(0, roleCharIndex);
+        roleCharIndex++;
+        if (roleCharIndex > currentRole.length + 10) {
+          deleting = true;
+          setTimeout(typeRoles, 2000);
+        } else {
+          setTimeout(typeRoles, 50);
+        }
+      } else {
+        roleCharIndex--;
+        roleElement.textContent = currentRole.substring(0, roleCharIndex);
+        if (roleCharIndex <= 0) {
+          deleting = false;
+          roleIndex = (roleIndex + 1) % roles.length;
+          setTimeout(typeRoles, 300);
+        } else {
+          setTimeout(typeRoles, 30);
+        }
+      }
+    }
+
+    typeName();
+  });
+
+  // Regenerate tagline button
+  const regenerateBtn = document.getElementById('regenerate-tagline');
+  const taglineText = document.getElementById('tagline-text');
+  const regenerateIcon = document.getElementById('regenerate-icon');
+
+  const taglines = [
+    "Creating digital experiences that fuse innovation with elegance",
+    "Building tomorrow's web today with pixel-perfect precision",
+    "Crafting interfaces where technology meets artistic expression",
+    "Transforming complex problems into elegant digital solutions"
+  ];
+
+  regenerateBtn.addEventListener('click', () => {
+    regenerateBtn.disabled = true;
+    regenerateIcon.classList.add('spin-animation');
+    regenerateIcon.style.animation = 'spin 1.5s linear infinite';
+    regenerateBtn.setAttribute('aria-busy', 'true');
+
+    setTimeout(() => {
+      const index = Math.floor(Math.random() * taglines.length);
+      taglineText.textContent = taglines[index];
+      regenerateBtn.disabled = false;
+      regenerateIcon.style.animation = 'none';
+      regenerateBtn.setAttribute('aria-busy', 'false');
+    }, 1500);
+  });
+
+  // Spin keyframe
+  const styleElem = document.createElement('style');
+  styleElem.innerHTML = `@keyframes spin { from { transform: rotate(0deg);} to { transform: rotate(360deg);} }`;
+  document.head.appendChild(styleElem);
+
+  // Generate Skills button
+  const generateSkillsBtn = document.getElementById('generate-skills');
+  const skillsLoading = document.getElementById('skills-loading');
+
+  generateSkillsBtn.addEventListener('click', () => {
+    generateSkillsBtn.disabled = true;
+    skillsLoading.classList.remove('hidden');
+
+    setTimeout(() => {
+      skillsLoading.classList.add('hidden');
+      generateSkillsBtn.disabled = false;
+      alert('This is a prototype. In the full version, this would generate a personalized skills assessment.');
+    }, 2000);
+  });
+
+  // Contact form validation and saving
+  const contactForm = document.getElementById('contact-form');
+  const formStatus = document.getElementById('form-status');
+
+  contactForm.addEventListener('submit', e => {
+    e.preventDefault();
+
+    // Clear previous errors
+    document.querySelectorAll('#contact form input, #contact form textarea').forEach(input => {
+      input.classList.remove('error');
+      const errorSpan = document.getElementById('error-' + input.id);
+      if(errorSpan) {
+        errorSpan.textContent = '';
+        errorSpan.classList.add('visually-hidden');
+      }
+    });
+    formStatus.textContent = '';
+    formStatus.style.display = 'none';
+
+    let valid = true;
+    // Validate fields
+    const name = contactForm.name;
+    if(!name.value.trim()) {
+      showError(name, 'Name is required');
+      valid = false;
+    }
+    const email = contactForm.email;
+    if(!email.value.trim()) {
+      showError(email, 'Email is required');
+      valid = false;
+    } else if(!validateEmail(email.value.trim())) {
+      showError(email, 'Please enter a valid email address');
+      valid = false;
+    }
+    const subject = contactForm.subject;
+    if(!subject.value.trim()) {
+      showError(subject, 'Subject is required');
+      valid = false;
+    }
+    const message = contactForm.message;
+    if(!message.value.trim()) {
+      showError(message, 'Message is required');
+      valid = false;
+    }
+
+    if(!valid) return;
+
+    // Save to localStorage
+    const formData = {
+      name: name.value.trim(),
+      email: email.value.trim(),
+      subject: subject.value.trim(),
+      message: message.value.trim(),
+      timestamp: new Date().toISOString()
+    };
+
+    try {
+      let saved = JSON.parse(localStorage.getItem('contactMessages') || '[]');
+      saved.push(formData);
+      localStorage.setItem('contactMessages', JSON.stringify(saved));
+      formStatus.style.color = '#22c55e';
+      formStatus.style.display = 'block';
+      formStatus.textContent = 'Message sent successfully! I\'ll get back to you soon.';
+      contactForm.reset();
+    } catch(err) {
+      formStatus.style.color = '#ff3c78';
+      formStatus.style.display = 'block';
+      formStatus.textContent = 'Failed to send message. Please try again.';
+    }
+  });
+
+  function showError(input, message) {
+    input.classList.add('error');
+    const errSpan = document.getElementById('error-' + input.id);
+    if(errSpan) {
+      errSpan.textContent = message;
+      errSpan.classList.remove('visually-hidden');
+    }
+  }
+
+  function validateEmail(email) {
+    const re = /^[\\w.-]+@[\\w.-]+\\.\\w+$/;
+    return re.test(email.toLowerCase());
+  }
+
+</script>
+</body>
+</html>
+
